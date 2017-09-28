@@ -56,17 +56,17 @@
             android:id="@+id/tvCreatedAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/tvScreenName"
+            android:layout_below="@+id/tvName"
+            android:layout_toEndOf="@+id/ivProfile"
             app:createdAt="@{tweet.createdAt}"
-            style="@style/CreatedAt"
-            android:layout_alignParentTop="true"/>
+            style="@style/CreatedAt" />
 
         <TextView
             android:id="@+id/tvBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/ivProfile"
-            android:layout_below="@id/tvScreenName"
+            android:layout_below="@id/tvCreatedAt"
             android:text="@{tweet.body}"
             style="@style/Body"
             android:autoLink="all"/>

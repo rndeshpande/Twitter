@@ -30,7 +30,7 @@
 
     <style name="CreatedAt">
         <item name="android:layout_marginStart">@dimen/user_name_margin_start</item>
-        <item name="android:textSize">@dimen/tweet_text_size</item>
+        <item name="android:textSize">@dimen/created_text_size</item>
         <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
     </style>
 
@@ -40,7 +40,7 @@
         <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
         <item name="android:layout_marginTop">@dimen/body_margin_top</item>
     </style>
-    
+
     <style name="Fab">
         <item name="android:backgroundTint">@color/fabBackgroundTint</item>
         <item name="android:layout_margin">@dimen/fab_margin</item>

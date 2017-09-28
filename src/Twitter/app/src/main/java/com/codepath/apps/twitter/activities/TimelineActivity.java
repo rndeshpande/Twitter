@@ -33,7 +33,7 @@ import cz.msebera.android.httpclient.Header;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class TimelineActivity extends AppCompatActivity implements CreateDialogFragment.OnFragmentInteractionListener  {
+public class TimelineActivity extends AppCompatActivity implements CreateDialogFragment.OnFragmentInteractionListener {
 
     private TwitterClient client;
     private ArrayList<Tweet> mTweets;
@@ -73,7 +73,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         client = TwitterApp.getRestClient();
         btnCreatePost = mBinding.btnCreatePost;
 
-        btnCreatePost.setOnClickListener(v-> {
+        btnCreatePost.setOnClickListener(v -> {
             CreateDialogFragment dialogFragment = CreateDialogFragment.newInstance();
             dialogFragment.show(TimelineActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
         });
@@ -94,7 +94,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
-                for(int i=0; i< responseArray.length(); i++ ) {
+                for (int i = 0; i < responseArray.length(); i++) {
                     Tweet tweet = null;
                     try {
                         tweet = Tweet.fromJSON(responseArray.getJSONObject(i));
@@ -131,22 +131,19 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         client.postTweet(tweetRequest, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d(TAG, response.toString());
+                Tweet tweet = new Tweet();
+                try {
+                    tweet = Tweet.fromJSON(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mTweets.add(0, tweet);
+                mAdapter.notifyItemInserted(0);
+                rvTweets.smoothScrollToPosition(0);
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
-                for(int i=0; i< responseArray.length(); i++ ) {
-                    Tweet tweet = null;
-                    try {
-                        tweet = Tweet.fromJSON(responseArray.getJSONObject(i));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    mTweets.add(0,tweet);
-                    //mAdapter.notifyItemInserted(mTweets.size() - 1);
-                    mAdapter.notifyItemInserted(0);
-                }
             }
 
             @Override
@@ -168,7 +165,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
             }
         });
     }
-
 
 
     @Override
