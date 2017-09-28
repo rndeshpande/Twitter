@@ -1,16 +1,10 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
-
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="Tweet">
@@ -19,12 +13,13 @@
 
     <style name="UserName">
         <item name="android:layout_marginStart">@dimen/user_name_margin_start</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontPath">fonts/Helvetica Neu Bold.ttf</item>
         <item name="android:textSize">@dimen/tweet_text_size</item>
     </style>
 
     <style name="ScreenName">
         <item name="android:layout_marginStart">@dimen/user_name_margin_start</item>
+        <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
         <item name="android:textSize">@dimen/tweet_text_size</item>
     </style>
 
@@ -35,11 +30,19 @@
     <style name="CreatedAt">
         <item name="android:layout_marginStart">@dimen/user_name_margin_start</item>
         <item name="android:textSize">@dimen/tweet_text_size</item>
+        <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
     </style>
 
     <style name="Body">
         <item name="android:layout_marginStart">@dimen/user_name_margin_start</item>
         <item name="android:textSize">@dimen/tweet_text_size</item>
+        <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
+        <item name="android:layout_marginTop">@dimen/body_margin_top</item>
+    </style>
+    
+    <style name="Fab">
+        <item name="android:backgroundTint">@color/fabBackgroundTint</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
     </style>
 
 </resources>

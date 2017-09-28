@@ -68,7 +68,8 @@
             android:layout_toEndOf="@+id/ivProfile"
             android:layout_below="@id/tvScreenName"
             android:text="@{tweet.body}"
-            style="@style/Body"/>
+            style="@style/Body"
+            android:autoLink="all"/>
 
     </RelativeLayout>
 </layout>

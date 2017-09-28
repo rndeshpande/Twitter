@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.twitter.R;
+import com.codepath.apps.twitter.utils.CommonUtils;
 
 import org.w3c.dom.Text;
 
@@ -31,7 +32,6 @@ public class CustomBindingAdapter {
 
     @BindingAdapter({"bind:createdAt"})
     public static void getCreatedAt(TextView view, String createdAt) {
-
-        view.setText("* 10h");
+        view.setText(CommonUtils.getRelativeTimeAgo(createdAt));
     }
 }
