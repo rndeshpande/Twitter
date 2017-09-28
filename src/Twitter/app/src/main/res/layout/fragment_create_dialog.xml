@@ -17,8 +17,9 @@
             android:id="@+id/etStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:hint="@string/tweet_new_placeholder" />
+            android:layout_marginBottom="@dimen/tweet_create_status_margin_bottom"
+            android:hint="@string/tweet_new_placeholder"
+            android:maxLength="140"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:id="@+id/tvCharCount"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="Characters Remaining: 140"/>
+                android:text="@string/tweet_new_charlimit"/>
 
             <Button
                 android:id="@+id/btnSubmit"
@@ -41,7 +42,9 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/tvCharCount"
-                android:text="@string/tweet_button" />
+                android:text="@string/tweet_button"
+                style="@style/TweetCreate"
+                />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

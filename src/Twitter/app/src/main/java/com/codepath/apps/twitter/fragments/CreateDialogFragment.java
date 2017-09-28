@@ -5,9 +5,12 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,7 +27,10 @@ import org.parceler.Parcels;
 
 public class CreateDialogFragment extends DialogFragment {
     EditText etStatus;
+    TextView tvCharCount;
     Button btnSubmit;
+
+    private final static int CHARACTER_LIMIT = 140;
 
     FragmentCreateDialogBinding binding;
 
@@ -49,16 +55,47 @@ public class CreateDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_dialog, container, false);
-
         View view = binding.getRoot();
 
+        setSubmitBehavior();
+        setCharacterLimit();
+
+        return view;
+    }
+
+    private void setSubmitBehavior() {
         btnSubmit = binding.btnSubmit;
         btnSubmit.setOnClickListener(v -> {
             onButtonPressed();
             dismiss();
         });
+    }
 
-        return view;
+    private void setCharacterLimit() {
+        etStatus = binding.etStatus;
+        tvCharCount = binding.tvCharCount;
+        String test = getString(R.string.test);
+        String remainingChars = getString(R.string.tweet_new_charlimit) + Integer.toString(CHARACTER_LIMIT);
+        tvCharCount.setText(remainingChars);
+
+        etStatus.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                String remainingChars = getString(R.string.tweet_new_charlimit) + Integer.toString(CHARACTER_LIMIT - length);
+                tvCharCount.setText(remainingChars);
+            }
+        });
     }
 
     public void onButtonPressed() {

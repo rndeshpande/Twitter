@@ -166,7 +166,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         });
     }
 
-
     @Override
     public void onFragmentInteraction(TweetRequest tweetRequest) {
         postTweet(tweetRequest);
