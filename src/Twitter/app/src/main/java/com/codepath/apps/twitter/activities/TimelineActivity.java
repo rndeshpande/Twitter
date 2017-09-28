@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.animation.Animation;
 
 import com.codepath.apps.twitter.R;
 import com.codepath.apps.twitter.TwitterApp;
@@ -49,6 +50,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     long mMaxId = 0;
 
     private static final String TAG = "TwitterClient";
+    private static final int ROTATION = 360;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,10 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
     private void initialize() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_timeline);
+
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.twitter_logo_blue);
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/HelveticaNeue.ttf")
@@ -86,6 +92,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         btnCreatePost = mBinding.btnCreatePost;
 
         btnCreatePost.setOnClickListener(v -> {
+            btnCreatePost.animate().rotation(ROTATION);
             CreateDialogFragment dialogFragment = CreateDialogFragment.newInstance();
             dialogFragment.show(TimelineActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
         });
