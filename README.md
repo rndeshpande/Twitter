@@ -9,7 +9,7 @@ Time spent: **10** hours spent in total
 The following **required** functionality is completed:
 
 * [ ]	User can **sign in to Twitter** using OAuth login
-* []	User can **view tweets from their home timeline**
+* [ ]	User can **view tweets from their home timeline**
   * [X] User is displayed the username, name, and body for each tweet
   * [X] User is displayed the [relative timestamp](https://gist.github.com/nesquena/f786232f5ef72f6e10a7) for each tweet "8m", "7h"
   * [ ] User can view more tweets as they scroll with [infinite pagination](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews-and-RecyclerView). Number of tweets is unlimited.
