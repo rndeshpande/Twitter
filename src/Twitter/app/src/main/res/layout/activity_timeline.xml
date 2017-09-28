@@ -2,18 +2,22 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
-
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/clMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvTweet"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvTweet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnCreatePost"
@@ -22,9 +26,10 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_create"
             app:fabSize="normal"
-            app:layout_anchor="@id/rvTweet"
+            app:layout_anchor="@id/swipeContainer"
             app:layout_anchorGravity="bottom|right"
             app:layout_behavior="com.codepath.apps.twitter.utils.ScrollAwareFABBehavior" />
+
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

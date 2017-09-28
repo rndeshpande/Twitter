@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.codepath.apps.twitter.TwitterClient;
 import com.codepath.apps.twitter.adapters.TweetAdapter;
 import com.codepath.apps.twitter.databinding.ActivityTimelineBinding;
 import com.codepath.apps.twitter.fragments.CreateDialogFragment;
+import com.codepath.apps.twitter.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.twitter.models.Tweet;
 import com.codepath.apps.twitter.models.TweetRequest;
 import com.github.scribejava.apis.TwitterApi;
@@ -42,6 +44,9 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     private RecyclerView rvTweets;
     private ActivityTimelineBinding mBinding;
     FloatingActionButton btnCreatePost;
+    SwipeRefreshLayout swipeContainer;
+    EndlessRecyclerViewScrollListener scrollListener;
+    long mMaxId = 0;
 
     private static final String TAG = "TwitterClient";
 
@@ -62,13 +67,20 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         );
 
         rvTweets = mBinding.rvTweet;
-
         mTweets = new ArrayList<>();
 
         mAdapter = new TweetAdapter(this, mTweets);
         mLayoutManager = new LinearLayoutManager(this);
         rvTweets.setAdapter(mAdapter);
         rvTweets.setLayoutManager(mLayoutManager);
+
+        scrollListener = new EndlessRecyclerViewScrollListener((LinearLayoutManager) mLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                populateTimeline();
+            }
+        };
+        rvTweets.addOnScrollListener(scrollListener);
 
         client = TwitterApp.getRestClient();
         btnCreatePost = mBinding.btnCreatePost;
@@ -78,6 +90,14 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
             dialogFragment.show(TimelineActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
         });
 
+        swipeContainer = mBinding.swipeContainer;
+        swipeContainer.setOnRefreshListener(() -> {
+            populateTimeline();
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     @Override
@@ -86,7 +106,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     }
 
     private void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+        client.getHomeTimeline(mMaxId - 1, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d(TAG, response.toString());
@@ -103,6 +123,8 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                     }
                     mTweets.add(tweet);
                     mAdapter.notifyItemInserted(mTweets.size() - 1);
+                    swipeContainer.setRefreshing(false);
+                    setMaxId(tweet.uuid);
                 }
             }
 
@@ -110,20 +132,30 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d(TAG, responseString);
                 throwable.printStackTrace();
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d(TAG, errorResponse.toString());
                 throwable.printStackTrace();
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 Log.d(TAG, errorResponse.toString());
                 throwable.printStackTrace();
+                swipeContainer.setRefreshing(false);
             }
         });
+    }
+
+    private void setMaxId(long maxId) {
+        if (mMaxId == 0)
+            mMaxId = maxId;
+        else
+            mMaxId = maxId < mMaxId ? maxId : mMaxId;
     }
 
     // TODO : move this to a separate class

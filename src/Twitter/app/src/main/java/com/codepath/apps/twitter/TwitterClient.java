@@ -1,6 +1,7 @@
 package com.codepath.apps.twitter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.apps.twitter.models.TweetRequest;
 import com.codepath.oauth.OAuthBaseClient;
@@ -44,12 +45,14 @@ public class TwitterClient extends OAuthBaseClient {
 						context.getString(R.string.intent_scheme), context.getPackageName(), FALLBACK_URL));
 	}
 
-	public void getHomeTimeline(AsyncHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("statuses/home_timeline.json");
+	public void getHomeTimeline(long maxId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/home_timeline.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("format", "json");
 		params.put("count", REQUEST_ITEM_COUNT);
+		if(maxId > 0)
+			params.put("max_id", maxId);
 		client.get(apiUrl, params, handler);
 	}
 
