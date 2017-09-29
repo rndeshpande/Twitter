@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/tools">
     <string name="app_name">AlTwitter</string>
     <string name="login_label">Log in</string>
     <string name="intent_scheme">oauth</string>
@@ -10,5 +10,6 @@
     <string name="tweet_new_placeholder">What\'s Happening?</string>
     <string name="tweet_new_charlimit">Remaining characters: </string>
     <string name="test">text</string>
-
+    <string android:name="com.twitter.sdk.android.CONSUMER_KEY">MkRh75as5VjUT4Bp7YCqPvFu3</string>
+    <string android:name="com.twitter.sdk.android.CONSUMER_SECRET">w7IsqzkRpJmJrdP8TMzWoqVACICK7QhANfHThdIzvrDEzKlo8r</string>
 </resources>

@@ -98,9 +98,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         });
 
         swipeContainer = mBinding.swipeContainer;
-        swipeContainer.setOnRefreshListener(() -> {
-            populateTimeline();
-        });
+        swipeContainer.setOnRefreshListener(this::populateTimeline);
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,

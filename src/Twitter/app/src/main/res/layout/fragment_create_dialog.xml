@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/tweet_create_status_margin_bottom"
             android:hint="@string/tweet_new_placeholder"
-            android:maxLength="140"/>
+            android:maxLength="140"
+            style="@style/TweetNewText"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,7 +34,8 @@
                 android:id="@+id/tvCharCount"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:text="@string/tweet_new_charlimit"/>
+                android:text="@string/tweet_new_charlimit"
+                style="@style/TweetNewCount"/>
 
             <Button
                 android:id="@+id/btnSubmit"

@@ -51,5 +51,19 @@
         <item name="android:layout_width">10dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:textColor">#FFFFFF</item>
+        <item name="fontPath">fonts/Helvetica Neu Bold.ttf</item>
+        <item name="android:textSize">@dimen/tweet_text_size</item>
+    </style>
+    <style name="TweetNewText">
+        <item name="android:textSize">@dimen/tweet_text_size</item>
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
+    </style>
+    <style name="TweetNewCount">
+        <item name="android:textSize">@dimen/tweet_text_size</item>
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
     </style>
 </resources>
