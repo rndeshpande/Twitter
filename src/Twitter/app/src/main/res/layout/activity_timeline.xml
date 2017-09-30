@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
@@ -25,12 +26,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_create"
+            app:elevation="6dp"
             app:fabSize="normal"
             app:layout_anchor="@id/swipeContainer"
             app:layout_anchorGravity="bottom|right"
             app:layout_behavior="com.codepath.apps.twitter.utils.ScrollAwareFABBehavior"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"/>
+            app:pressedTranslationZ="12dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -32,6 +32,7 @@ public class CustomBindingAdapter {
 
     @BindingAdapter({"bind:createdAt"})
     public static void getCreatedAt(TextView view, String createdAt) {
-        view.setText(CommonUtils.getRelativeTimeAgo(createdAt));
+        if(createdAt != null &&  !createdAt.isEmpty())
+            view.setText(CommonUtils.getRelativeTimeAgo(createdAt));
     }
 }

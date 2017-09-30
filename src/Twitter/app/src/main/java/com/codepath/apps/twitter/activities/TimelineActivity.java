@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.codepath.apps.twitter.R;
 import com.codepath.apps.twitter.TwitterApp;
@@ -51,6 +53,8 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
     private static final String TAG = "TwitterClient";
     private static final int ROTATION = 360;
+
+    Button btnTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
     }
 
     @Override
@@ -126,6 +131,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                     Tweet tweet = null;
                     try {
                         tweet = Tweet.fromJSON(responseArray.getJSONObject(i));
+                        Log.d("TWITTERCLIENT", responseArray.getJSONObject(i).toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

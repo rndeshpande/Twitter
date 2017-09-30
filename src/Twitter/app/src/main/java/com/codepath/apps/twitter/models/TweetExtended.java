@@ -5,25 +5,24 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 
 /**
- * Created by rdeshpan on 9/25/2017.
+ * Created by rdeshpan on 9/29/2017.
  */
 @Parcel
-public class Tweet {
+public class TweetExtended {
     public String body;
     public long uuid;
     public User user;
     public String createdAt;
 
-    public  Tweet() {
+    public  TweetExtended() {
 
     }
-    public Tweet(String body, long uuid, String createdAt, User user) {
+    public TweetExtended(String body, long uuid, String createdAt, User user) {
         this.body = body;
         this.uuid = uuid;
         this.createdAt = createdAt;
         this.user = user;
     }
-
 
 
     public String getBody() {
@@ -58,13 +57,13 @@ public class Tweet {
         this.user = user;
     }
 
-    public static Tweet fromJSON(JSONObject jsonObject) throws JSONException {
-        Tweet tweet = new Tweet();
-        tweet.body = jsonObject.getString("text");
-        tweet.uuid = jsonObject.getLong("id");
-        tweet.createdAt = jsonObject.getString("created_at");
-        tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+    public static TweetExtended fromJSON(JSONObject jsonObject) throws JSONException {
+        TweetExtended tweetExtended= new TweetExtended();
+        tweetExtended.body = jsonObject.getString("full_text");
+        tweetExtended.uuid = jsonObject.getLong("id");
+        tweetExtended.createdAt = jsonObject.getString("created_at");
+        tweetExtended.user = User.fromJSON(jsonObject.getJSONObject("user"));
 
-        return tweet;
+        return tweetExtended;
     }
 }
