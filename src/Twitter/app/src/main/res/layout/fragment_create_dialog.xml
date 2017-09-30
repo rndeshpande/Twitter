@@ -11,6 +11,8 @@
 
     <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
+        android:windowMinWidthMinor="0dp"
+        android:windowMinWidthMajor="0dp"
         android:layout_height="match_parent">
 
         <EditText
@@ -20,7 +22,8 @@
             android:layout_marginBottom="@dimen/tweet_create_status_margin_bottom"
             android:hint="@string/tweet_new_placeholder"
             android:maxLength="140"
-            style="@style/TweetNewText"/>
+            style="@style/TweetNewText"
+            android:text='@{"@" + tweet.inReplyToScreenName}'/>
 
         <RelativeLayout
             android:layout_width="match_parent"

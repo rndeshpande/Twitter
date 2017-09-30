@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,6 +29,9 @@ public class CreateDialogFragment extends DialogFragment {
     TextView tvCharCount;
     Button btnSubmit;
 
+    long inReplyToStatusId;
+    String inReplyToScreenName;
+
     private final static int CHARACTER_LIMIT = 140;
 
     FragmentCreateDialogBinding binding;
@@ -45,6 +47,14 @@ public class CreateDialogFragment extends DialogFragment {
         return fragment;
     }
 
+    public static CreateDialogFragment newInstance(Parcelable tweetRequest) {
+        CreateDialogFragment fragment = new CreateDialogFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("tweet_request", tweetRequest);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +66,13 @@ public class CreateDialogFragment extends DialogFragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_dialog, container, false);
         View view = binding.getRoot();
+
+        if (getArguments() != null) {
+            TweetRequest tweetRequest = (TweetRequest) Parcels.unwrap(getArguments().getParcelable("tweet_request"));
+            binding.setTweet(tweetRequest);
+            inReplyToStatusId = tweetRequest.getInReplyToStatusId();
+            inReplyToScreenName = tweetRequest.getInReplyToScreenName();
+        }
 
         setSubmitBehavior();
         setCharacterLimit();
@@ -101,8 +118,7 @@ public class CreateDialogFragment extends DialogFragment {
     public void onButtonPressed() {
         mListener = (OnFragmentInteractionListener) getActivity();
         if (mListener != null) {
-            TweetRequest tweetRequest = new TweetRequest(binding.etStatus.getText().toString());
-
+            TweetRequest tweetRequest = new TweetRequest(binding.etStatus.getText().toString(), inReplyToStatusId, inReplyToScreenName);
             mListener.onFragmentInteraction(tweetRequest);
         }
     }

@@ -24,6 +24,7 @@ import com.codepath.apps.twitter.fragments.CreateDialogFragment;
 import com.codepath.apps.twitter.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.twitter.models.Tweet;
 import com.codepath.apps.twitter.models.TweetRequest;
+import com.codepath.apps.twitter.utils.TestDataHelper;
 import com.github.scribejava.apis.TwitterApi;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -119,6 +120,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     }
 
     private void populateTimeline() {
+
         client.getHomeTimeline(mMaxId - 1, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -131,7 +133,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                     Tweet tweet = null;
                     try {
                         tweet = Tweet.fromJSON(responseArray.getJSONObject(i));
-                        Log.d("TWITTERCLIENT", responseArray.getJSONObject(i).toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -160,6 +161,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 swipeContainer.setRefreshing(false);
             }
         });
+        
     }
 
     private void refreshDataAndUI(Tweet tweet) {
@@ -227,5 +229,14 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
     private void resetSearch() {
         mMaxId = 0;
+    }
+
+    // TODO: remove the test data functions
+    private void populateTestData() {
+        ArrayList<Tweet> tweets = TestDataHelper.getTweets();
+
+        for(Tweet tweet: tweets) {
+            refreshDataAndUI(tweet);
+        }
     }
 }
