@@ -62,34 +62,21 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         final ListTweetBinding binding;
 
-        public TextView tvHeadline;
-
-        public TextView tvSnippet;
-
-        public TextView tvSectionName;
-
-        public ImageView ivThumbnail;
-
-        public Button btnShare;
-
         public ViewHolder(View itemView) {
             super(itemView);
             binding = ListTweetBinding.bind(itemView);
-            Log.d("TWITTERCLIENT", itemView.getContext().toString());
-
             itemView.setOnClickListener(this);
         }
 
         public void bind(Tweet tweet) {
             binding.setTweet(tweet);
             binding.executePendingBindings();
-
         }
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition(); // gets item position
-            if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
                 Tweet tweet = mTweets.get(position);
                 Intent intent = new Intent(mContext, DetailsActivity.class);
                 intent.putExtra("tweet_details", Parcels.wrap(Tweet.class, tweet));

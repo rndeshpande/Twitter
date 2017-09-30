@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.twitter.R;
@@ -31,7 +32,7 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
 
     private static final String TAG = "TwitterClient";
     private ActivityDetailsBinding mBinding;
-    Button btnReply;
+    TextView tvReply;
     private TwitterClient client;
 
     @Override
@@ -50,9 +51,9 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
         );
         client = TwitterApp.getRestClient();
 
-        btnReply = mBinding.btnReply;
+        tvReply = mBinding.tvReply;
 
-        btnReply.setOnClickListener(v -> {
+        tvReply.setOnClickListener(v -> {
             TweetRequest tweetRequest = new TweetRequest("", mBinding.getTweet().getUuid(), mBinding.getTweet().getUser().getScreenName());
             CreateDialogFragment dialogFragment = CreateDialogFragment.newInstance(Parcels.wrap(tweetRequest));
             dialogFragment.show(DetailsActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
@@ -62,7 +63,9 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     private void populateView() {
         Tweet tweet = (Tweet)Parcels.unwrap(getIntent().getParcelableExtra("tweet_details"));
 
+        populateTestData();
 
+        /*
         client.getTweetById(tweet.getUuid(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -100,6 +103,7 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
                 throwable.printStackTrace();
             }
         });
+        */
 
     }
     @Override

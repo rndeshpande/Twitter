@@ -7,9 +7,9 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class TweetRequest {
-    private String status;
-    private long inReplyToStatusId;
-    private String InReplyToScreenName;
+    public String status;
+    public long inReplyToStatusId;
+    public String InReplyToScreenName;
 
     public TweetRequest() {
     }

@@ -1,11 +1,11 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/background</item>
+         <item name="android:windowBackground">@color/background</item>
     </style>
 
     <style name="Tweet">
@@ -16,6 +16,7 @@
         <item name="android:layout_marginStart">@dimen/user_name_margin_start</item>
         <item name="fontPath">fonts/Helvetica Neu Bold.ttf</item>
         <item name="android:textSize">@dimen/tweet_text_size</item>
+        <item name="android:textColor">@color/colorUsername</item>
     </style>
 
     <style name="ScreenName">
@@ -31,14 +32,23 @@
     <style name="CreatedAt">
         <item name="android:layout_marginStart">@dimen/user_name_margin_start</item>
         <item name="android:textSize">@dimen/created_text_size</item>
+        <item name="android:layout_marginTop">@dimen/created_margin_top</item>
         <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
     </style>
 
     <style name="Body">
         <item name="android:layout_marginStart">@dimen/user_name_margin_start</item>
         <item name="android:textSize">@dimen/tweet_text_size</item>
-        <item name="fontPath">fonts/HelveticaNeue Medium.ttf</item>
+        <item name="fontPath">fonts/Helvetica Neu Bold.ttf</item>
         <item name="android:layout_marginTop">@dimen/body_margin_top</item>
+        <item name="android:textColor">@color/colorBody</item>
+    </style>
+
+    <style name="BodyDetails">
+        <item name="android:textSize">@dimen/tweet_text_size_details</item>
+        <item name="fontPath">fonts/Helvetica Neu Bold.ttf</item>
+        <item name="android:layout_marginTop">@dimen/body_margin_top</item>
+        <item name="android:textColor">@color/colorBody</item>
     </style>
 
     <style name="Fab">

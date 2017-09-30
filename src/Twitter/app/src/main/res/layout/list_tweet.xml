@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Tweet"
-        android:clickable="true"
-        >
+        android:clickable="true" >
 
         <ImageView
             android:id="@+id/ivProfile"
@@ -32,7 +31,8 @@
             android:layout_toEndOf="@+id/ivProfile"
             android:text="@{tweet.user.name}"
             style="@style/UserName"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true"
+            android:hint="Name"/>
 
         <ImageView
             android:id="@+id/tvVerified"
@@ -76,5 +76,39 @@
             style="@style/Body"
             android:autoLink="all"/>
 
+        <TextView
+            android:id="@+id/tvComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ivProfile"
+            android:layout_below="@id/tvBody"
+            android:layout_marginStart="5dp"
+            android:drawableStart="@drawable/ic_comment"
+            android:layout_alignParentBottom="true"
+            />
+
+        <TextView
+            android:id="@+id/tvRetweet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tvComment"
+            android:layout_below="@id/tvBody"
+            android:text="@{String.valueOf(tweet.retweetCount)}"
+            android:layout_marginStart="60dp"
+            android:drawableStart="@drawable/ic_retweet"
+            android:layout_alignParentBottom="true"
+            />
+
+        <TextView
+            android:id="@+id/tvFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tvRetweet"
+            android:layout_below="@id/tvBody"
+            android:text="@{String.valueOf(tweet.favoriteCount)}"
+            android:layout_marginStart="60dp"
+            android:drawableStart="@drawable/ic_favorite"
+            android:layout_alignParentBottom="true"
+            />
     </RelativeLayout>
 </layout>

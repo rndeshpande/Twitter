@@ -16,16 +16,22 @@ public class TestDataHelper {
 
     public static Tweet getTweet () {
         Tweet tweet = new Tweet();
+
         tweet.setBody("With data from @googlenewslab, tap below to see our insights on the top search trends from this week. https://t.codV854mSofU");
         tweet.setCreatedAt("Fri Sep 29 23:24:44 +0000 2017");
         tweet.setUuid(913907427224936449L);
+        tweet.setFavoriteCount(171);
+        tweet.setRetweetCount(30);
+
         User user = new User();
         user.setName("Google");
         user.setProfileImageUrl("http://pbs.twimg.com/profile_images/839721704163155970/LI_TRk1z_normal.jpg");
         user.setScreenName("Google");
         user.setVerified(true);
         user.setUuid(20536157);
+
         tweet.user = user;
+
         return  tweet;
     }
 

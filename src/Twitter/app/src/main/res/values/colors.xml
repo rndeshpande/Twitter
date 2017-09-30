@@ -4,5 +4,8 @@
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="fabBackgroundTint">#FF00aced</color>
+    <color name="backgroundTint">#FF00aced</color>
     <color name="background">#FFFFFF</color>
+    <color name="colorUsername">#000000</color>
+    <color name="colorBody">#585858</color>
 </resources>

@@ -8,9 +8,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.Toast;
@@ -60,16 +63,22 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initialize();
         populateTimeline();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     private void initialize() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_timeline);
 
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.twitter_logo_blue);
+        Toolbar toolbar = mBinding.toolbar;
+        setSupportActionBar(toolbar);
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/HelveticaNeue.ttf")
@@ -84,6 +93,8 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         mLayoutManager = new LinearLayoutManager(this);
         rvTweets.setAdapter(mAdapter);
         rvTweets.setLayoutManager(mLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        rvTweets.addItemDecoration(dividerItemDecoration);
 
         scrollListener = new EndlessRecyclerViewScrollListener((LinearLayoutManager) mLayoutManager) {
             @Override
@@ -120,7 +131,8 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     }
 
     private void populateTimeline() {
-
+        populateTestData();
+        /*
         client.getHomeTimeline(mMaxId - 1, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -161,7 +173,8 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 swipeContainer.setRefreshing(false);
             }
         });
-        
+        */
+
     }
 
     private void refreshDataAndUI(Tweet tweet) {
