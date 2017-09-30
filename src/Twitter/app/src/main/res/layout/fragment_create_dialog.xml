@@ -23,7 +23,7 @@
             android:hint="@string/tweet_new_placeholder"
             android:maxLength="140"
             style="@style/TweetNewText"
-            android:text='@{"@" + tweet.inReplyToScreenName}'/>
+            android:text='@{"@" + tweet.inReplyToScreenName + " " + tweet.status}'/>
 
         <RelativeLayout
             android:layout_width="match_parent"

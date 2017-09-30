@@ -3,6 +3,7 @@ package com.codepath.apps.twitter.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -64,6 +65,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        checkSendIntent();
         initialize();
         populateTimeline();
     }
@@ -72,6 +74,27 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void checkSendIntent() {
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+
+                // Make sure to check whether returned data will be null.
+                String titleOfPage = intent.getStringExtra(Intent.EXTRA_SUBJECT);
+                String urlOfPage = intent.getStringExtra(Intent.EXTRA_TEXT);
+                Uri imageUriOfPage = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                TweetRequest tweetRequest = new TweetRequest();
+                String status = titleOfPage + " " + urlOfPage;
+                tweetRequest.setStatus(status);
+
+                showCreateDialog(tweetRequest);
+            }
+        }
     }
 
     private void initialize() {
@@ -109,8 +132,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
         btnCreatePost.setOnClickListener(v -> {
             btnCreatePost.animate().rotation(ROTATION);
-            CreateDialogFragment dialogFragment = CreateDialogFragment.newInstance();
-            dialogFragment.show(TimelineActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
+            showCreateDialog(null);
         });
 
         swipeContainer = mBinding.swipeContainer;
@@ -123,6 +145,17 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+    }
+
+    private void showCreateDialog(TweetRequest tweetRequest) {
+        CreateDialogFragment dialogFragment;
+        Toast.makeText(this, tweetRequest.getStatus(), Toast.LENGTH_SHORT).show();
+        if(tweetRequest != null)
+            dialogFragment = CreateDialogFragment.newInstance(Parcels.wrap(tweetRequest));
+        else
+            dialogFragment = CreateDialogFragment.newInstance();
+
+        dialogFragment.show(TimelineActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
     }
 
     @Override
