@@ -25,6 +25,7 @@ import com.codepath.apps.twitter.models.Tweet;
 import com.codepath.apps.twitter.models.TweetExtended;
 import com.codepath.apps.twitter.models.TweetRequest;
 import com.codepath.apps.twitter.models.VideoVariant;
+import com.codepath.apps.twitter.utils.CommonUtils;
 import com.codepath.apps.twitter.utils.TestDataHelper;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -55,26 +56,21 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     private void initialize() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/HelveticaNeue.ttf")
+                .setDefaultFontPath("fonts/Helvetica Neue Bold.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
         client = TwitterApp.getRestClient();
+    }
 
-        ivComment = mBinding.ivComment;
-
-        ivComment.setOnClickListener(v -> {
-            TweetRequest tweetRequest = new TweetRequest("", mBinding.getTweet().getUuid(), mBinding.getTweet().getUser().getScreenName());
-            CreateDialogFragment dialogFragment = CreateDialogFragment.newInstance(Parcels.wrap(tweetRequest));
-            dialogFragment.show(DetailsActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
-        });
+    public void onCommentClick(View view) {
+        TweetRequest tweetRequest = new TweetRequest("", mBinding.getTweet().getUuid(), mBinding.getTweet().getUser().getScreenName());
+        CreateDialogFragment dialogFragment = CreateDialogFragment.newInstance(Parcels.wrap(tweetRequest));
+        dialogFragment.show(DetailsActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
     }
 
     private void populateView() {
         Tweet tweet = (Tweet)Parcels.unwrap(getIntent().getParcelableExtra("tweet_details"));
-
-        //populateTestData();
-
         client.getTweetById(tweet.getUuid(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -85,7 +81,7 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
                     e.printStackTrace();
                 }
                 mBinding.setTweet(tweetExtended);
-                setupVideoPlayback(tweetExtended);
+                setupMediaDisplay(tweetExtended);
             }
 
             @Override
@@ -110,9 +106,8 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     }
     @Override
     public void onFragmentInteraction(TweetRequest tweetRequest) {
-        Toast.makeText(this, "Posting Reply", Toast.LENGTH_SHORT).show();
         postTweet(tweetRequest);
-        //showMessage(getString(R.string.tweet_posted));
+        CommonUtils.showMessage(mBinding.getRoot(), getString(R.string.tweet_posted));
     }
 
     // TODO : move this to a separate class
@@ -144,16 +139,16 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
         });
     }
 
-    // TODO: remove below test data helper
-    private void populateTestData() {
-        TweetExtended tweetExtended = TestDataHelper.getTweetExtended();
-        mBinding.setTweet(tweetExtended);
-    }
+    private void setupMediaDisplay(TweetExtended tweetExtended) {
 
-    private void setupVideoPlayback(TweetExtended tweetExtended) {
-        if(tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl() != "") {
+        // Play video if available
+        if(tweetExtended.entitiesExtended.media != null
+                && tweetExtended.entitiesExtended.media.size() > 0
+                && tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().size() > 0
+                && tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl() != "") {
+
             ivMediaImage = mBinding.ivMediaImage;
-            ivMediaImage.setVisibility(View.INVISIBLE);
+            ivMediaImage.setVisibility(View.GONE);
             vvMediaVideo = mBinding.vvMediaVideo;
             vvMediaVideo.setVideoPath(tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl());
             MediaController mediaController = new MediaController(this);
@@ -161,14 +156,17 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
             vvMediaVideo.setMediaController(mediaController);
             vvMediaVideo.requestFocus();
             vvMediaVideo.setMediaController(null);
-            vvMediaVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                // Close the progress bar and play the video
-                public void onPrepared(MediaPlayer mp) {
-                    vvMediaVideo.start();
-                }
+            vvMediaVideo.setOnPreparedListener(mp -> {
+                mp.setLooping(true);
+                mp.start();
             });
 
-
         }
+    }
+
+    // TODO: remove below test data helper
+    private void populateTestData() {
+        TweetExtended tweetExtended = TestDataHelper.getTweetExtended();
+        mBinding.setTweet(tweetExtended);
     }
 }

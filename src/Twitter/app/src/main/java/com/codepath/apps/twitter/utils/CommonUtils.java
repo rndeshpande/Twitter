@@ -79,9 +79,11 @@ public class CommonUtils {
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         sf.setLenient(true);
 
+        SimpleDateFormat output = new SimpleDateFormat("hh:mm aa . MMM dd yyyy");
+
         String date = "";
         try {
-            date = sf.parse(rawJsonDate).toString();
+            date = output.format(sf.parse(rawJsonDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }

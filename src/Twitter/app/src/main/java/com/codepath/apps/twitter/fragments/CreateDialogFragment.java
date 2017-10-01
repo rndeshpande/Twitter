@@ -92,7 +92,7 @@ public class CreateDialogFragment extends DialogFragment {
         etStatus = binding.etStatus;
         tvCharCount = binding.tvCharCount;
         String test = getString(R.string.test);
-        String remainingChars = getString(R.string.tweet_new_charlimit) + Integer.toString(CHARACTER_LIMIT);
+        String remainingChars = Integer.toString(CHARACTER_LIMIT);
         tvCharCount.setText(remainingChars);
 
         etStatus.addTextChangedListener(new TextWatcher() {
@@ -109,7 +109,7 @@ public class CreateDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                String remainingChars = getString(R.string.tweet_new_charlimit) + Integer.toString(CHARACTER_LIMIT - length);
+                String remainingChars = Integer.toString(CHARACTER_LIMIT - length);
                 tvCharCount.setText(remainingChars);
             }
         });

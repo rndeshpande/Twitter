@@ -80,32 +80,37 @@
             <ImageView
                 android:id="@+id/ivMediaImage"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/tvBody"
-                app:imageUrlFull='@{tweet.entities.media.get(0).mediaUrl}' />
+                android:layout_marginTop="10dp"
+                app:imageUrlFull='@{tweet.entities.media.size() > 0 ? tweet.entities.media.get(0).mediaUrl : ""}' />
 
             <VideoView
                 android:id="@+id/vvMediaVideo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ivMediaImage"
+                android:layout_marginTop="10dp"
                 />
 
             <TextView
                 android:id="@+id/tvCreatedAt"
-                style="@style/CreatedAt"
+                style="@style/DetailsCreatedAt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/vvMediaVideo"
-                app:createdAtExact="@{tweet.createdAt}" />
+                app:createdAtExact="@{tweet.createdAt}"
+                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/tvCountSummary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvCreatedAt"
-                android:text='@{tweet.retweetCount + " Retweets    " + tweet.favoriteCount + " Likes"}' />
+                android:text='@{tweet.retweetCount + " Retweets    " + tweet.favoriteCount + " Likes"}'
+                android:layout_marginTop="5dp"
+                style="@style/DetailsCountsSummary"/>
 
             <RelativeLayout
                 android:id="@+id/rlCounts"
@@ -121,7 +126,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="5dp"
-                    android:src="@drawable/ic_comment" />
+                    android:src="@drawable/ic_comment"
+                    android:onClick="onCommentClick"/>
 
                 <ImageView
                     android:id="@+id/ivRetweet"
