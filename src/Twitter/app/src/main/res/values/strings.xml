@@ -10,4 +10,5 @@
     <string name="tweet_new_placeholder">What\'s Happening?</string>
     <string name="tweet_new_charlimit">Remaining characters: </string>
     <string name="test">text</string>
+    <string name="logout">Logout</string>
 </resources>

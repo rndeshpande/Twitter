@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -79,6 +80,17 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                logout();
+                break;
+        }
+        return true;
+    }
+
     private void checkSendIntent() {
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -110,9 +122,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 .build()
         );
 
-        btnLogout = mBinding.btnLogout;
-
-
         rvTweets = mBinding.rvTweet;
         mTweets = new ArrayList<>();
 
@@ -132,13 +141,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         rvTweets.addOnScrollListener(scrollListener);
 
         client = TwitterApp.getRestClient();
-        btnLogout.setOnClickListener(v -> {
-            //Toast.makeText(this, "Logout clicked", Toast.LENGTH_SHORT).show();
-            client.clearAccessToken();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        });
-
         btnCreatePost = mBinding.btnCreatePost;
 
         btnCreatePost.setOnClickListener(v -> {
@@ -156,6 +158,12 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+    }
+
+    private void logout() {
+        client.clearAccessToken();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void setToolbar() {
@@ -221,7 +229,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
             });
         } else {
             CommonUtils.showMessage(mBinding.clMain, "Unable to refresh data. No network connection available.");
-            //populateTestData();
             populateDataFromDb();
         }
     }
