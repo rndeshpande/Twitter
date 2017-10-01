@@ -297,21 +297,25 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     }
 
     private void resetSearch() {
+        mTweets.clear();
+        mAdapter.notifyDataSetChanged();
         mMaxId = 0;
+        DataProvider provider = new DataProvider();
+        provider.deleteAll();
     }
 
-    // TODO: remove the test data functions
-    private void populateTestData() {
-        ArrayList<Tweet> tweets = TestDataHelper.getTweets();
+    private void populateDataFromDb() {
+        DataProvider provider = new DataProvider();
+        ArrayList<Tweet> tweets = provider.readTweets();
 
         for (Tweet tweet : tweets) {
             refreshDataAndUI(tweet);
         }
     }
 
-    private void populateDataFromDb() {
-        DataProvider provider = new DataProvider();
-        ArrayList<Tweet> tweets = provider.readTweets();
+    // TODO: remove the test data functions
+    private void populateTestData() {
+        ArrayList<Tweet> tweets = TestDataHelper.getTweets();
 
         for (Tweet tweet : tweets) {
             refreshDataAndUI(tweet);
