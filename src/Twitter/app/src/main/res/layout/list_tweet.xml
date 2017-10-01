@@ -29,30 +29,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/ivProfile"
-            android:text="@{tweet.user.name}"
+            android:text="@{tweet.user.name + ' '}"
             style="@style/UserName"
             android:layout_alignParentTop="true"
+            android:drawableEnd='@{tweet.user.verified ? @drawable/ic_check_mark : null}'
             android:hint="Name"/>
-
-        <ImageView
-            android:id="@+id/tvVerified"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/tvName"
-            android:visibility='@{tweet.user.verified ? View.VISIBLE : View.GONE}'
-            android:src="@drawable/ic_check_mark"
-            android:adjustViewBounds="true"
-            android:maxWidth="@dimen/verified_check_width"
-            android:maxHeight="@dimen/verified_check_height"
-            android:layout_alignParentTop="true"
-            android:scaleType="fitXY"
-            style="@style/Verified"/>
 
         <TextView
             android:id="@+id/tvScreenName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/tvVerified"
+            android:layout_toEndOf="@+id/tvName"
             android:text='@{"@"+ tweet.user.screenName}'
             style="@style/ScreenName"
             android:layout_alignParentTop="true"/>

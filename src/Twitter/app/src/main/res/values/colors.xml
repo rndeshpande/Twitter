@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#FFFFFF</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#CCCCCC</color>
+    <color name="colorAccent">#0000EE</color>
+    <color name="backgroundLogin">#E5E5E5</color>
     <color name="fabBackgroundTint">#FF00aced</color>
-    <color name="backgroundTint">#FF00aced</color>
+    <color name="backgroundTint">#FFFFFF</color>
     <color name="background">#FFFFFF</color>
     <color name="colorUsername">#000000</color>
     <color name="colorBody">#585858</color>

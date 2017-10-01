@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/tools">
-    <string name="app_name">AlTwitter</string>
-    <string name="login_label">Log in</string>
+    <string name="app_name">Twitterrific</string>
+    <string name="login_label">Log in with Twitter</string>
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
     <string name="tweet_new">Tweet Posted</string>

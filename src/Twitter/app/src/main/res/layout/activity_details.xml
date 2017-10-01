@@ -11,88 +11,87 @@
         <import type="android.view.View" />
     </data>
 
-    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        style="@style/Tweet"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.codepath.apps.twitter.activities.DetailsActivity"
-        android:fitsSystemWindows="true">
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundTint"
-            android:minHeight="?attr/actionBarSize"
-            />
+            android:minHeight="?attr/actionBarSize" />
 
-        <ImageView
-            android:id="@+id/ivProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:imageUrl='@{tweet.user.profileImageUrl}'
-            android:layout_below="@+id/toolbar"
-            android:layout_alignParentStart="true"
-            />
-
-        <TextView
-            android:id="@+id/tvName"
-            style="@style/UserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/ivProfile"
-            android:layout_below="@+id/toolbar"
-            android:text="@{tweet.user.name}" />
-
-        <ImageView
-            android:id="@+id/tvVerified"
-            style="@style/Verified"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/tvName"
-            android:layout_below="@+id/toolbar"
-            android:adjustViewBounds="true"
-            android:maxHeight="@dimen/verified_check_height"
-            android:maxWidth="@dimen/verified_check_width"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_check_mark"
-            android:visibility='@{tweet.user.verified ? View.VISIBLE : View.GONE}' />
-
-        <TextView
-            android:id="@+id/tvScreenName"
-            style="@style/ScreenName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvName"
-            android:layout_toEndOf="@+id/ivProfile"
-            android:text='@{"@"+ tweet.user.screenName}' />
-
-        <TextView
-            android:id="@+id/tvBody"
-            style="@style/BodyDetails"
+        <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            style="@style/Tweet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ivProfile"
-            android:layout_alignParentStart="true"
-            android:autoLink="all"
-            android:text="@{tweet.body}"
-            />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:context="com.codepath.apps.twitter.activities.DetailsActivity">
 
-        <TextView
-            android:id="@+id/tvCreatedAt"
-            style="@style/CreatedAt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvBody"
-            android:layout_alignParentStart="true"
-            app:createdAt="@{tweet.createdAt}"
-            />
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                app:imageUrl='@{tweet.user.profileImageUrl}' />
 
-        <TextView
-            android:id="@+id/tvReply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_comment"
-            android:layout_below="@+id/tvCreatedAt"/>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tvName"
+                style="@style/UserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/ivProfile"
+                android:text="@{tweet.user.name}" />
+
+            <ImageView
+                android:id="@+id/tvVerified"
+                style="@style/Verified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/tvName"
+                android:adjustViewBounds="true"
+                android:maxHeight="@dimen/verified_check_height"
+                android:maxWidth="@dimen/verified_check_width"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_check_mark"
+                android:visibility='@{tweet.user.verified ? View.VISIBLE : View.GONE}' />
+
+            <TextView
+                android:id="@+id/tvScreenName"
+                style="@style/ScreenName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvName"
+                android:layout_toEndOf="@+id/ivProfile"
+                android:text='@{"@"+ tweet.user.screenName}' />
+
+            <TextView
+                android:id="@+id/tvBody"
+                style="@style/BodyDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/ivProfile"
+                android:autoLink="all"
+                android:text="@{tweet.body}" />
+
+            <TextView
+                android:id="@+id/tvCreatedAt"
+                style="@style/CreatedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/tvBody"
+                app:createdAt="@{tweet.createdAt}" />
+
+            <TextView
+                android:id="@+id/tvReply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvCreatedAt"
+                android:background="@drawable/ic_comment" />
+        </RelativeLayout>
+    </LinearLayout>
 </layout>

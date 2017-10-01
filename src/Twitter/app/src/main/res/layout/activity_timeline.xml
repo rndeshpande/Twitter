@@ -16,8 +16,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/backgroundTint"
+                android:background="@drawable/toolbar_border"
                 android:minHeight="?attr/actionBarSize"
+
                  />
 
             <android.support.v4.widget.SwipeRefreshLayout

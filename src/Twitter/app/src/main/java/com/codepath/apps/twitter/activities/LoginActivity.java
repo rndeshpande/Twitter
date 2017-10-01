@@ -24,10 +24,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-        Twitter.initialize(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-        setupTwitterLoginButton();
 	}
 
 	// OAuth authenticated successfully, launch primary authenticated activity
@@ -52,34 +50,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		getClient().connect();
 	}
 
-	private void setupTwitterLoginButton() {
-        Log.d("TWITTERCLIENT", "Initializing");
-
-        btnTwitterLogin = (TwitterLoginButton) findViewById(R.id.btnTwitterLogin);
-        btnTwitterLogin.setCallback(new Callback<TwitterSession>() {
-			@Override
-			public void success(Result<TwitterSession> result) {
-                Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_LONG).show();
-				// Do something with result, which provides a TwitterSession for making API calls
-			}
-
-			@Override
-			public void failure(TwitterException exception) {
-				// Do something on failure
-			}
-		});
-
-	}
-
 	public void onClick(View view) {
         Toast.makeText(view.getContext(), "Cllicking", Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Pass the activity result to the login button.
-        btnTwitterLogin.onActivityResult(requestCode, resultCode, data);
-    }
 }

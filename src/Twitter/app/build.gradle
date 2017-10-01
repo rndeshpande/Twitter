@@ -73,6 +73,10 @@ dependencies {
     compile 'com.twitter.sdk.android:tweet-composer:3.1.1'
     annotationProcessor 'com.android.databinding:compiler:2.3.0'
     annotationProcessor 'org.parceler:parceler:1.1.6'
+
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
 }
 
 apply plugin: 'com.android.application'
