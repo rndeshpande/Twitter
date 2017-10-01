@@ -52,9 +52,9 @@
             style="@style/CreatedAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            app:createdAt="@{tweet.createdAt}"
-            android:layout_alignParentEnd="true"/>
+            app:createdAt="@{tweet.createdAt}" />
 
         <TextView
             android:id="@+id/tvBody"
@@ -67,46 +67,46 @@
             android:text="@{tweet.body}" />
 
         <RelativeLayout
+            android:id="@+id/rlCounts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvBody"
-            android:layout_toEndOf="@+id/ivProfile"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_toEndOf="@+id/ivProfile">
 
             <TextView
                 android:id="@+id/tvComment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
                 android:layout_marginStart="5dp"
-                android:drawableStart="@drawable/ic_comment"
-                android:layout_alignParentStart="true" />
+                android:drawableStart="@drawable/ic_comment" />
 
             <TextView
                 android:id="@+id/tvRetweet"
+                style="@style/RetweetCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:drawableStart="@drawable/ic_retweet"
-                android:drawablePadding="5dp"
-                android:text="@{String.valueOf(tweet.retweetCount)}"
-                android:gravity="center"
                 android:layout_centerHorizontal="true"
-                style="@style/RetweetCount"
-                />
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_retweet"
+                android:gravity="center"
+                android:text="@{String.valueOf(tweet.retweetCount)}" />
 
             <TextView
                 android:id="@+id/tvFavorite"
+                style="@style/FavoriteCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:drawableStart="@drawable/ic_favorite"
-                android:text="@{String.valueOf(tweet.favoriteCount)}"
-                android:drawablePadding="5dp"
-                android:gravity="center"
                 android:layout_alignParentEnd="true"
-                style="@style/FavoriteCount"/>
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_favorite"
+                android:gravity="center"
+                android:text="@{String.valueOf(tweet.favoriteCount)}" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

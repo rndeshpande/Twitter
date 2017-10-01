@@ -1,5 +1,7 @@
 package com.codepath.apps.twitter.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
@@ -13,6 +15,46 @@ public class TweetExtended {
     public long uuid;
     public User user;
     public String createdAt;
+    public int retweetCount;
+    public int favoriteCount;
+    public Entities entities;
+    public EntitiesExtended entitiesExtended;
+
+    public EntitiesExtended getEntitiesExtended() {
+        return entitiesExtended;
+    }
+
+    public void setEntitiesExtended(EntitiesExtended entitiesExtended) {
+        this.entitiesExtended = entitiesExtended;
+    }
+
+    public int getRetweetCount() {
+        return retweetCount;
+    }
+
+    public void setRetweetCount(int retweetCount) {
+        this.retweetCount = retweetCount;
+    }
+
+    public int getFavoriteCount() {
+        return favoriteCount;
+    }
+
+    public void setFavoriteCount(int favoriteCount) {
+        this.favoriteCount = favoriteCount;
+    }
+
+
+
+    public Entities getEntities() {
+        return entities;
+    }
+
+    public void setEntities(Entities entities) {
+        this.entities = entities;
+    }
+
+
 
     public  TweetExtended() {
 
@@ -58,11 +100,16 @@ public class TweetExtended {
     }
 
     public static TweetExtended fromJSON(JSONObject jsonObject) throws JSONException {
+        Log.d("TwitterClient", jsonObject.toString());
         TweetExtended tweetExtended= new TweetExtended();
         tweetExtended.body = jsonObject.getString("full_text");
         tweetExtended.uuid = jsonObject.getLong("id");
         tweetExtended.createdAt = jsonObject.getString("created_at");
+        tweetExtended.retweetCount = jsonObject.getInt("retweet_count");
+        tweetExtended.favoriteCount = jsonObject.getInt("favorite_count");
         tweetExtended.user = User.fromJSON(jsonObject.getJSONObject("user"));
+        tweetExtended.entities = Entities.fromJSON(jsonObject.getJSONObject("entities"));
+        tweetExtended.entitiesExtended = EntitiesExtended.fromJSON(jsonObject.getJSONObject("extended_entities"));
 
         return tweetExtended;
     }

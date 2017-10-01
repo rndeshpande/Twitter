@@ -2,12 +2,18 @@ package com.codepath.apps.twitter.activities;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+
+
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.codepath.apps.twitter.R;
 import com.codepath.apps.twitter.TwitterApp;
@@ -17,6 +23,7 @@ import com.codepath.apps.twitter.fragments.CreateDialogFragment;
 import com.codepath.apps.twitter.models.Tweet;
 import com.codepath.apps.twitter.models.TweetExtended;
 import com.codepath.apps.twitter.models.TweetRequest;
+import com.codepath.apps.twitter.models.VideoVariant;
 import com.codepath.apps.twitter.utils.TestDataHelper;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -32,7 +39,8 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
 
     private static final String TAG = "TwitterClient";
     private ActivityDetailsBinding mBinding;
-    TextView tvReply;
+    ImageView ivComment;
+    VideoView vvMediaVideo;
     private TwitterClient client;
 
     @Override
@@ -51,9 +59,9 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
         );
         client = TwitterApp.getRestClient();
 
-        tvReply = mBinding.tvReply;
+        ivComment = mBinding.ivComment;
 
-        tvReply.setOnClickListener(v -> {
+        ivComment.setOnClickListener(v -> {
             TweetRequest tweetRequest = new TweetRequest("", mBinding.getTweet().getUuid(), mBinding.getTweet().getUser().getScreenName());
             CreateDialogFragment dialogFragment = CreateDialogFragment.newInstance(Parcels.wrap(tweetRequest));
             dialogFragment.show(DetailsActivity.this.getSupportFragmentManager(), "fragment_create_dialog");
@@ -63,9 +71,8 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     private void populateView() {
         Tweet tweet = (Tweet)Parcels.unwrap(getIntent().getParcelableExtra("tweet_details"));
 
-        populateTestData();
+        //populateTestData();
 
-        /*
         client.getTweetById(tweet.getUuid(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -78,6 +85,7 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
                     e.printStackTrace();
                 }
                 mBinding.setTweet(tweetExtended);
+                setupVideoPlayback(tweetExtended);
             }
 
             @Override
@@ -103,8 +111,6 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
                 throwable.printStackTrace();
             }
         });
-        */
-
     }
     @Override
     public void onFragmentInteraction(TweetRequest tweetRequest) {
@@ -149,5 +155,25 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     private void populateTestData() {
         TweetExtended tweetExtended = TestDataHelper.getTweetExtended();
         mBinding.setTweet(tweetExtended);
+    }
+
+    private void setupVideoPlayback(TweetExtended tweetExtended) {
+        if(tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl() != "") {
+            vvMediaVideo = mBinding.vvMediaVideo;
+            vvMediaVideo.setVideoPath(tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl());
+            MediaController mediaController = new MediaController(this);
+            mediaController.setAnchorView(vvMediaVideo);
+            vvMediaVideo.setMediaController(mediaController);
+            vvMediaVideo.requestFocus();
+            vvMediaVideo.setMediaController(null);
+            vvMediaVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                // Close the progress bar and play the video
+                public void onPrepared(MediaPlayer mp) {
+                    vvMediaVideo.start();
+                }
+            });
+
+
+        }
     }
 }

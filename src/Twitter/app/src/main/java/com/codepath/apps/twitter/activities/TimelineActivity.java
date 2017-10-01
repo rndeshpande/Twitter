@@ -145,8 +145,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         Toolbar toolbar = mBinding.toolbar;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //getSupportActionBar().setLogo(R.drawable.twitter_logo_blue);
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
     private void showCreateDialog(TweetRequest tweetRequest) {
         CreateDialogFragment dialogFragment;
@@ -165,8 +163,8 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     }
 
     private void populateTimeline() {
-        populateTestData();
-        /*
+        //populateTestData();
+
         client.getHomeTimeline(mMaxId - 1, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -175,9 +173,11 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
+
                 for (int i = 0; i < responseArray.length(); i++) {
                     Tweet tweet = null;
                     try {
+                        Log.d(TAG, responseArray.getJSONObject(i).toString());
                         tweet = Tweet.fromJSON(responseArray.getJSONObject(i));
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -207,8 +207,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 swipeContainer.setRefreshing(false);
             }
         });
-        */
-
     }
 
     private void refreshDataAndUI(Tweet tweet) {

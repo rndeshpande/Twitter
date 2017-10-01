@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.codepath.apps.restclienttemplate"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 25
     }
 
@@ -77,6 +77,8 @@ dependencies {
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+
+    compile "com.android.support:cardview-v7:${supportLibVersion}"
 }
 
 apply plugin: 'com.android.application'

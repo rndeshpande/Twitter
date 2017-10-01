@@ -29,10 +29,27 @@ public class CustomBindingAdapter {
                 .into(view);
     }
 
+    @BindingAdapter({"bind:imageUrlFull"})
+    public static void loadImageFull(ImageView view, String imageUrl) {
+
+        Glide.with(view.getContext())
+                .load(imageUrl)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_launcher))
+                .into(view);
+    }
+
 
     @BindingAdapter({"bind:createdAt"})
     public static void getCreatedAt(TextView view, String createdAt) {
         if(createdAt != null &&  !createdAt.isEmpty())
             view.setText(CommonUtils.getRelativeTimeAgo(createdAt));
+    }
+
+    @BindingAdapter({"bind:createdAtExact"})
+    public static void getCreatedAtExact(TextView view, String createdAt) {
+        if(createdAt != null &&  !createdAt.isEmpty())
+            view.setText(CommonUtils.getExactDate(createdAt));
     }
 }

@@ -16,6 +16,16 @@ public class Tweet {
     public int retweetCount;
     public int favoriteCount;
 
+    public Entities getEntities() {
+        return entities;
+    }
+
+    public void setEntities(Entities entities) {
+        this.entities = entities;
+    }
+
+    public Entities entities;
+
     public  Tweet() {
 
     }

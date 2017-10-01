@@ -14,8 +14,9 @@ import java.util.Locale;
 
 public class CommonUtils {
 
+    private static final String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+
     public static String getRelativeTimeAgo(String rawJsonDate) {
-        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         sf.setLenient(true);
 
@@ -67,5 +68,19 @@ public class CommonUtils {
 
             return todate.format(inputdate);
         }
+    }
+
+    public static String getExactDate(String rawJsonDate) {
+        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+        sf.setLenient(true);
+
+        String date = "";
+        try {
+            date = sf.parse(rawJsonDate).toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
     }
 }
