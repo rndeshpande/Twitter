@@ -1,6 +1,11 @@
 package com.codepath.apps.twitter.utils;
 
+import android.app.Activity;
+import android.support.design.widget.Snackbar;
 import android.text.format.DateUtils;
+import android.view.View;
+
+import com.codepath.apps.twitter.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,5 +87,10 @@ public class CommonUtils {
         }
 
         return date;
+    }
+
+    public static void showMessage(View view , String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+
     }
 }

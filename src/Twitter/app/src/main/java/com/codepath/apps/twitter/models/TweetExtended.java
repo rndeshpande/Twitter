@@ -45,7 +45,6 @@ public class TweetExtended {
     }
 
 
-
     public Entities getEntities() {
         return entities;
     }
@@ -55,10 +54,10 @@ public class TweetExtended {
     }
 
 
-
-    public  TweetExtended() {
+    public TweetExtended() {
 
     }
+
     public TweetExtended(String body, long uuid, String createdAt, User user) {
         this.body = body;
         this.uuid = uuid;
@@ -100,8 +99,8 @@ public class TweetExtended {
     }
 
     public static TweetExtended fromJSON(JSONObject jsonObject) throws JSONException {
-        Log.d("TwitterClient", jsonObject.toString());
-        TweetExtended tweetExtended= new TweetExtended();
+
+        TweetExtended tweetExtended = new TweetExtended();
         tweetExtended.body = jsonObject.getString("full_text");
         tweetExtended.uuid = jsonObject.getLong("id");
         tweetExtended.createdAt = jsonObject.getString("created_at");

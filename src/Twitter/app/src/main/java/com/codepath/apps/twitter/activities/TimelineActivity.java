@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.nfc.Tag;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,7 +28,11 @@ import com.codepath.apps.twitter.databinding.ActivityTimelineBinding;
 import com.codepath.apps.twitter.fragments.CreateDialogFragment;
 import com.codepath.apps.twitter.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.twitter.models.Tweet;
+import com.codepath.apps.twitter.models.TweetModel;
 import com.codepath.apps.twitter.models.TweetRequest;
+import com.codepath.apps.twitter.providers.DataProvider;
+import com.codepath.apps.twitter.utils.CommonUtils;
+import com.codepath.apps.twitter.utils.NetworkUtils;
 import com.codepath.apps.twitter.utils.TestDataHelper;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -53,6 +59,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     SwipeRefreshLayout swipeContainer;
     EndlessRecyclerViewScrollListener scrollListener;
     long mMaxId = 0;
+    Button btnLogout;
 
     private static final String TAG = "TwitterClient";
     private static final int ROTATION = 360;
@@ -103,6 +110,9 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 .build()
         );
 
+        btnLogout = mBinding.btnLogout;
+
+
         rvTweets = mBinding.rvTweet;
         mTweets = new ArrayList<>();
 
@@ -110,7 +120,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         mLayoutManager = new LinearLayoutManager(this);
         rvTweets.setAdapter(mAdapter);
         rvTweets.setLayoutManager(mLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rvTweets.addItemDecoration(dividerItemDecoration);
 
         scrollListener = new EndlessRecyclerViewScrollListener((LinearLayoutManager) mLayoutManager) {
@@ -122,6 +132,13 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         rvTweets.addOnScrollListener(scrollListener);
 
         client = TwitterApp.getRestClient();
+        btnLogout.setOnClickListener(v -> {
+            //Toast.makeText(this, "Logout clicked", Toast.LENGTH_SHORT).show();
+            client.clearAccessToken();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        });
+
         btnCreatePost = mBinding.btnCreatePost;
 
         btnCreatePost.setOnClickListener(v -> {
@@ -130,7 +147,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         });
 
         swipeContainer = mBinding.swipeContainer;
-        swipeContainer.setOnRefreshListener(()-> {
+        swipeContainer.setOnRefreshListener(() -> {
             resetSearch();
             populateTimeline();
         });
@@ -146,10 +163,11 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
     private void showCreateDialog(TweetRequest tweetRequest) {
         CreateDialogFragment dialogFragment;
-        Toast.makeText(this, tweetRequest.getStatus(), Toast.LENGTH_SHORT).show();
-        if(tweetRequest != null)
+
+        if (tweetRequest != null)
             dialogFragment = CreateDialogFragment.newInstance(Parcels.wrap(tweetRequest));
         else
             dialogFragment = CreateDialogFragment.newInstance();
@@ -163,50 +181,49 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     }
 
     private void populateTimeline() {
-        //populateTestData();
-
-        client.getHomeTimeline(mMaxId - 1, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d(TAG, response.toString());
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
-
-                for (int i = 0; i < responseArray.length(); i++) {
-                    Tweet tweet = null;
-                    try {
-                        Log.d(TAG, responseArray.getJSONObject(i).toString());
-                        tweet = Tweet.fromJSON(responseArray.getJSONObject(i));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    refreshDataAndUI(tweet);
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            client.getHomeTimeline(mMaxId - 1, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d(TAG, responseString);
-                throwable.printStackTrace();
-                swipeContainer.setRefreshing(false);
-            }
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d(TAG, errorResponse.toString());
-                throwable.printStackTrace();
-                swipeContainer.setRefreshing(false);
-            }
+                    for (int i = 0; i < responseArray.length(); i++) {
+                        Tweet tweet = null;
+                        try {
+                            tweet = Tweet.fromJSON(responseArray.getJSONObject(i));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        refreshDataAndUI(tweet);
+                    }
+                }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d(TAG, errorResponse.toString());
-                throwable.printStackTrace();
-                swipeContainer.setRefreshing(false);
-            }
-        });
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    swipeContainer.setRefreshing(false);
+                    throwable.printStackTrace();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    swipeContainer.setRefreshing(false);
+                    throwable.printStackTrace();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    swipeContainer.setRefreshing(false);
+                    throwable.printStackTrace();
+                }
+            });
+        } else {
+            CommonUtils.showMessage(mBinding.clMain, "Unable to refresh data. No network connection available.");
+            //populateTestData();
+            populateDataFromDb();
+        }
     }
 
     private void refreshDataAndUI(Tweet tweet) {
@@ -214,6 +231,12 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         mAdapter.notifyItemInserted(mTweets.size() - 1);
         swipeContainer.setRefreshing(false);
         setMaxId(tweet.uuid);
+        updateDatabase(tweet);
+    }
+
+    private void updateDatabase(Tweet tweet) {
+        tweet.user.save();
+        tweet.save();
     }
 
     private void setMaxId(long maxId) {
@@ -245,19 +268,16 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d(TAG, responseString);
                 throwable.printStackTrace();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d(TAG, errorResponse.toString());
                 throwable.printStackTrace();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d(TAG, errorResponse.toString());
                 throwable.printStackTrace();
             }
         });
@@ -266,11 +286,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     @Override
     public void onFragmentInteraction(TweetRequest tweetRequest) {
         postTweet(tweetRequest);
-        showMessage(getString(R.string.tweet_posted));
-    }
-
-    private void showMessage(String message) {
-        Snackbar.make(this.findViewById(R.id.clMain), message, Snackbar.LENGTH_LONG).show();
+        CommonUtils.showMessage(mBinding.clMain, getString(R.string.tweet_posted));
     }
 
     private void resetSearch() {
@@ -281,7 +297,16 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     private void populateTestData() {
         ArrayList<Tweet> tweets = TestDataHelper.getTweets();
 
-        for(Tweet tweet: tweets) {
+        for (Tweet tweet : tweets) {
+            refreshDataAndUI(tweet);
+        }
+    }
+
+    private void populateDataFromDb() {
+        DataProvider provider = new DataProvider();
+        ArrayList<Tweet> tweets = provider.readTweets();
+
+        for (Tweet tweet : tweets) {
             refreshDataAndUI(tweet);
         }
     }

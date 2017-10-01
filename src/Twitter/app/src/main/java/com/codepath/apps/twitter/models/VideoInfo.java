@@ -28,13 +28,13 @@ public class VideoInfo {
         VideoInfo videoInfo = new VideoInfo();
 
         videoInfo.variants = new ArrayList<>();
-        Log.d("TwitterClient", jsonObject.toString());
+
         JSONArray jsonArray = jsonObject.getJSONArray("variants");
 
-        for(int i=0; i< jsonArray.length();i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 VideoVariant variant = VideoVariant.fromJSON(jsonArray.getJSONObject(i));
-                Log.d("TwitterClient", jsonArray.getJSONObject(i).toString());
+
                 videoInfo.variants.add(variant);
             } catch (JSONException e) {
                 e.printStackTrace();

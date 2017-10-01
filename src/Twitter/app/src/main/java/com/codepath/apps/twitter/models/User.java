@@ -1,5 +1,11 @@
 package com.codepath.apps.twitter.models;
 
+import com.codepath.apps.twitter.database.AppDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
@@ -8,7 +14,8 @@ import org.parceler.Parcel;
  * Created by rdeshpan on 9/25/2017.
  */
 @Parcel
-public class User {
+@Table(database = AppDatabase.class)
+public class User extends BaseModel {
     public String getName() {
         return name;
     }
@@ -49,10 +56,20 @@ public class User {
         this.verified = verified;
     }
 
+    @Column
     public String name;
+
+    @Column
+    @PrimaryKey
     public long uuid;
+
+    @Column
     public String screenName;
+
+    @Column
     public String profileImageUrl;
+
+    @Column
     public boolean verified;
 
     public static User fromJSON(JSONObject jsonObject) throws JSONException{

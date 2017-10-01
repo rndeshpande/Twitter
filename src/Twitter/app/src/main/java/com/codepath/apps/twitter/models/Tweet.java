@@ -1,5 +1,12 @@
 package com.codepath.apps.twitter.models;
 
+import com.codepath.apps.twitter.database.AppDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
@@ -8,12 +15,25 @@ import org.parceler.Parcel;
  * Created by rdeshpan on 9/25/2017.
  */
 @Parcel
-public class Tweet {
+@Table(database = AppDatabase.class)
+public class Tweet extends BaseModel {
+    @Column
     public String body;
+
+    @Column
+    @PrimaryKey
     public long uuid;
+
+    @ForeignKey
     public User user;
+
+    @Column
     public String createdAt;
+
+    @Column
     public int retweetCount;
+
+    @Column
     public int favoriteCount;
 
     public Entities getEntities() {
@@ -27,8 +47,8 @@ public class Tweet {
     public Entities entities;
 
     public  Tweet() {
-
     }
+
     public Tweet(String body, long uuid, String createdAt, User user, int retweetCount, int favoriteCount) {
         this.body = body;
         this.uuid = uuid;

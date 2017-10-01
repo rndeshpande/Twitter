@@ -23,13 +23,13 @@ public class Entities {
     public static Entities fromJSON(JSONObject jsonObject) throws JSONException {
         Entities entities = new Entities();
         entities.media = new ArrayList<>();
-        Log.d("TwitterClient", jsonObject.toString());
+
         JSONArray jsonArray = jsonObject.getJSONArray("media");
 
-        for(int i=0; i< jsonArray.length();i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 Media media = Media.fromJSON(jsonArray.getJSONObject(i));
-                Log.d("TwitterClient", jsonArray.getJSONObject(i).toString());
+
                 entities.media.add(media);
             } catch (JSONException e) {
                 e.printStackTrace();

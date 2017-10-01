@@ -8,6 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.LoginActivity"
     style="@style/Login">
+
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="wrap_content"

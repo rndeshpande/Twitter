@@ -2,6 +2,7 @@ package com.codepath.apps.twitter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,8 +12,6 @@ import com.codepath.oauth.OAuthLoginActionBarActivity;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
-
-	TwitterLoginButton btnTwitterLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +40,4 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	public void loginToRest(View view) {
 		getClient().connect();
 	}
-
-	public void onClick(View view) {
-        Toast.makeText(view.getContext(), "Cllicking", Toast.LENGTH_LONG).show();
-    }
-
 }

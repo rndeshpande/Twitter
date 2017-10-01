@@ -25,8 +25,8 @@ import com.loopj.android.http.RequestParams;
 public class TwitterClient extends OAuthBaseClient {
 	public static final BaseApi REST_API_INSTANCE = TwitterApi.instance(); // Change this
 	public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "MkRh75as5VjUT4Bp7YCqPvFu3";       // Change this
-	public static final String REST_CONSUMER_SECRET = "w7IsqzkRpJmJrdP8TMzWoqVACICK7QhANfHThdIzvrDEzKlo8r"; // Change this
+	public static final String REST_CONSUMER_KEY = "de7h2S1vm6Sx7fPYu8pCDECRp";       // Change this
+	public static final String REST_CONSUMER_SECRET = "EX4wEXulHg5p8esmuHK1JrHkmuyr7MPiNtnTKHGOZHiE0WJAkK"; // Change this
 
 	// Landing page to indicate the OAuth flow worked in case Chrome for Android 25+ blocks navigation back to the app.
 	public static final String FALLBACK_URL = "https://codepath.github.io/android-rest-client-template/success.html";
@@ -62,7 +62,6 @@ public class TwitterClient extends OAuthBaseClient {
         params.put("status", tweetRequest.getStatus());
         if(tweetRequest.getInReplyToStatusId() > 0)
             params.put("in_reply_to_status_id", tweetRequest.getInReplyToStatusId());
-        Log.d("TWITTERCLIENT", params.toString());
         client.post(apiUrl, params, handler);
 	}
 
@@ -71,16 +70,7 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("id", tweetId);
         params.put("tweet_mode", "extended");
-        Log.d("TwitterClient", params.toString());
 		client.get(apiUrl, params, handler);
 	}
 
-	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
-	 * 	  i.e getApiUrl("statuses/home_timeline.json");
-	 * 2. Define the parameters to pass to the request (query or body)
-	 *    i.e RequestParams params = new RequestParams("foo", "bar");
-	 * 3. Define the request method and make a call to the client
-	 *    i.e client.get(apiUrl, params, handler);
-	 *    i.e client.post(apiUrl, params, handler);
-	 */
 }

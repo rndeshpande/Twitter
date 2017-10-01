@@ -2,8 +2,10 @@ package com.codepath.apps.twitter.models;
 
 import com.codepath.apps.twitter.database.AppDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ConflictAction;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
@@ -12,7 +14,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 @Table(database = AppDatabase.class)
 public class TweetModel extends BaseModel {
-    public TweetModel(int id, long uuid, String status, String userName, String screenName, String createdAt, Boolean verified, Boolean isDraft) {
+    public TweetModel(int id, long uuid, String status, String userName, String screenName, String createdAt, Boolean verified, Boolean isDraft, int retweetCount, int favoriteCount) {
         this.id = id;
         this.uuid = uuid;
         this.status = status;
@@ -21,9 +23,11 @@ public class TweetModel extends BaseModel {
         this.createdAt = createdAt;
         this.verified = verified;
         this.isDraft = isDraft;
+        this.retweetCount = retweetCount;
+        this.favoriteCount = favoriteCount;
     }
 
-    public TweetModel(long uuid, String status, String userName, String screenName, String createdAt, Boolean verified, Boolean isDraft) {
+    public TweetModel(long uuid, String status, String userName, String screenName, String createdAt, Boolean verified, Boolean isDraft, int retweetCount, int favoriteCount) {
         this.id = id;
         this.uuid = uuid;
         this.status = status;
@@ -32,6 +36,8 @@ public class TweetModel extends BaseModel {
         this.createdAt = createdAt;
         this.verified = verified;
         this.isDraft = isDraft;
+        this.retweetCount = retweetCount;
+        this.favoriteCount = favoriteCount;
     }
 
     public TweetModel(){
@@ -97,6 +103,7 @@ public class TweetModel extends BaseModel {
     @PrimaryKey(autoincrement = true)
     int id;
 
+    @Unique(onUniqueConflict = ConflictAction.REPLACE)
     @Column
     long uuid;
 
@@ -114,6 +121,28 @@ public class TweetModel extends BaseModel {
 
     @Column
     Boolean verified;
+
+    @Column
+    int retweetCount;
+
+    public int getRetweetCount() {
+        return retweetCount;
+    }
+
+    public void setRetweetCount(int retweetCount) {
+        this.retweetCount = retweetCount;
+    }
+
+    public int getFavoriteCount() {
+        return favoriteCount;
+    }
+
+    public void setFavoriteCount(int favoriteCount) {
+        this.favoriteCount = favoriteCount;
+    }
+
+    @Column
+    int favoriteCount;
 
     public Boolean getDraft() {
         return isDraft;

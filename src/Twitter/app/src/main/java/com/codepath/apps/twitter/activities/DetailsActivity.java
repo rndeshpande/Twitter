@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -41,6 +42,7 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     private ActivityDetailsBinding mBinding;
     ImageView ivComment;
     VideoView vvMediaVideo;
+    ImageView ivMediaImage;
     private TwitterClient client;
 
     @Override
@@ -76,8 +78,6 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
         client.getTweetById(tweet.getUuid(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d(TAG, Integer.toString(statusCode));
-                Log.d(TAG, response.toString());
                 TweetExtended tweetExtended = new TweetExtended();
                 try {
                     tweetExtended = TweetExtended.fromJSON(response);
@@ -90,24 +90,20 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
-                Log.d(TAG, responseArray.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d(TAG, responseString);
                 throwable.printStackTrace();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d(TAG, errorResponse.toString());
                 throwable.printStackTrace();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d(TAG, errorResponse.toString());
                 throwable.printStackTrace();
             }
         });
@@ -133,19 +129,16 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d(TAG, responseString);
                 throwable.printStackTrace();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d(TAG, errorResponse.toString());
                 throwable.printStackTrace();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d(TAG, errorResponse.toString());
                 throwable.printStackTrace();
             }
         });
@@ -159,6 +152,8 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
 
     private void setupVideoPlayback(TweetExtended tweetExtended) {
         if(tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl() != "") {
+            ivMediaImage = mBinding.ivMediaImage;
+            ivMediaImage.setVisibility(View.INVISIBLE);
             vvMediaVideo = mBinding.vvMediaVideo;
             vvMediaVideo.setVideoPath(tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl());
             MediaController mediaController = new MediaController(this);
