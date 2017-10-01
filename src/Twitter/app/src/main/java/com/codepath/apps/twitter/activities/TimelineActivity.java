@@ -15,7 +15,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -29,7 +28,6 @@ import com.codepath.apps.twitter.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.twitter.models.Tweet;
 import com.codepath.apps.twitter.models.TweetRequest;
 import com.codepath.apps.twitter.utils.TestDataHelper;
-import com.github.scribejava.apis.TwitterApi;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -58,8 +56,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
     private static final String TAG = "TwitterClient";
     private static final int ROTATION = 360;
-
-    Button btnTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +95,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
     private void initialize() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_timeline);
-
-        Toolbar toolbar = mBinding.toolbar;
-        setSupportActionBar(toolbar);
+        setToolbar();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/HelveticaNeue.ttf")
@@ -147,6 +141,13 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
 
     }
 
+    private void setToolbar() {
+        Toolbar toolbar = mBinding.toolbar;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setLogo(R.drawable.twitter_logo_blue);
+        //getSupportActionBar().setDisplayUseLogoEnabled(true);
+    }
     private void showCreateDialog(TweetRequest tweetRequest) {
         CreateDialogFragment dialogFragment;
         Toast.makeText(this, tweetRequest.getStatus(), Toast.LENGTH_SHORT).show();
@@ -216,6 +217,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         swipeContainer.setRefreshing(false);
         setMaxId(tweet.uuid);
     }
+
     private void setMaxId(long maxId) {
         if (mMaxId == 0)
             mMaxId = maxId;

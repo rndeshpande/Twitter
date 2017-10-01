@@ -10,6 +10,4 @@
     <string name="tweet_new_placeholder">What\'s Happening?</string>
     <string name="tweet_new_charlimit">Remaining characters: </string>
     <string name="test">text</string>
-    <string android:name="com.twitter.sdk.android.CONSUMER_KEY">MkRh75as5VjUT4Bp7YCqPvFu3</string>
-    <string android:name="com.twitter.sdk.android.CONSUMER_SECRET">w7IsqzkRpJmJrdP8TMzWoqVACICK7QhANfHThdIzvrDEzKlo8r</string>
 </resources>

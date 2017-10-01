@@ -7,6 +7,7 @@
     <dimen name="tweet_margin">10dp</dimen>
     <dimen name="tweet_text_size">17sp</dimen>
     <dimen name="tweet_text_size_details">20sp</dimen>
+    <dimen name="count_text_size">15sp</dimen>
 
     <dimen name="verified_check_width">15dp</dimen>
     <dimen name="verified_check_height">15dp</dimen>
