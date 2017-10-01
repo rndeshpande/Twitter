@@ -107,7 +107,6 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     @Override
     public void onFragmentInteraction(TweetRequest tweetRequest) {
         postTweet(tweetRequest);
-        CommonUtils.showMessage(mBinding.getRoot(), getString(R.string.tweet_posted));
     }
 
     // TODO : move this to a separate class
@@ -115,7 +114,7 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
         client.postTweet(tweetRequest, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Toast.makeText(DetailsActivity.this, "Reply Posted", Toast.LENGTH_SHORT).show();
+                CommonUtils.showMessage(mBinding.getRoot(), getString(R.string.tweet_posted));
             }
 
             @Override

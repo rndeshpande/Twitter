@@ -51,18 +51,19 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='Walkthroughs/Demo_1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Walkthroughs/Demo_2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
 Describe any challenges encountered while building the app.
+* [X] For a data-heavy application like this, the UI design proved to be challenging. Displaying enough information while keeping it clutter-free was an interesting problem. Also, use of colors and different font styles to accentuate and play down different elements was very good to learn.
 
 ## Open-source libraries used
 
 - [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
-- [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- [Glide](https://github.com/bumptech/glide) - An image loading and caching library for Android focused on smooth scrolling
 
 ## License
 

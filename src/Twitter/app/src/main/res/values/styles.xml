@@ -15,11 +15,12 @@
     <style name="LoginAppName">
         <item name="android:fontFamily">Casual</item>
         <item name="android:textSize">36sp</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="LoginButton">
         <item name="android:textColor">@color/background</item>
-        <item name="android:background">@color/fabBackgroundTint</item>
+        <item name="android:background">@color/loginButtonBackground</item>
         <item name="android:textStyle">bold</item>
         <item name="fontPath">fonts/Helvetica Neu Bold.ttf</item>
         <item name="android:layout_margin">20dp</item>
