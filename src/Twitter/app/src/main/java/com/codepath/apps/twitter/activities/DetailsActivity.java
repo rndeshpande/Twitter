@@ -45,6 +45,7 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     ImageView ivComment;
     VideoView vvMediaVideo;
     ImageView ivMediaImage;
+    ImageView ivBack;
     private TwitterClient client;
 
     @Override
@@ -62,6 +63,10 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
                 .build()
         );
         client = TwitterApp.getRestClient();
+    }
+
+    public void onBack(View view) {
+        finish();
     }
 
     public void onCommentClick(View view) {
