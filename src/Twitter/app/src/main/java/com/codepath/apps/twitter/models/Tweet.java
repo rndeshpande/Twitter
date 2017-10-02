@@ -36,6 +36,28 @@ public class Tweet extends BaseModel {
     @Column
     public int favoriteCount;
 
+    public Boolean getRetweeted() {
+        return retweeted;
+    }
+
+    public void setRetweeted(Boolean retweeted) {
+        this.retweeted = retweeted;
+    }
+
+    public Boolean getFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(Boolean favorited) {
+        this.favorited = favorited;
+    }
+
+    @Column
+    public Boolean retweeted;
+
+    @Column
+    public Boolean favorited;
+
     public Entities getEntities() {
         return entities;
     }
@@ -49,7 +71,7 @@ public class Tweet extends BaseModel {
     public  Tweet() {
     }
 
-    public Tweet(String body, long uuid, String createdAt, User user, int retweetCount, int favoriteCount) {
+    public Tweet(String body, long uuid, String createdAt, User user, int retweetCount, int favoriteCount, Boolean retweeted, Boolean favorited) {
         this.body = body;
         this.uuid = uuid;
         this.createdAt = createdAt;
@@ -113,6 +135,8 @@ public class Tweet extends BaseModel {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.retweetCount = jsonObject.getInt("retweet_count");
         tweet.favoriteCount = jsonObject.getInt("favorite_count");
+        tweet.retweeted = jsonObject.getBoolean("retweeted");
+        tweet.favorited = jsonObject.getBoolean("favorited");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
 
         return tweet;

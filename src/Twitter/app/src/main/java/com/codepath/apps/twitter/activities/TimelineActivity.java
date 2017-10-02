@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
-import android.nfc.Tag;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,21 +12,19 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.codepath.apps.twitter.R;
-import com.codepath.apps.twitter.TwitterApp;
-import com.codepath.apps.twitter.TwitterClient;
+import com.codepath.apps.twitter.utils.TwitterApp;
+import com.codepath.apps.twitter.utils.TwitterClient;
 import com.codepath.apps.twitter.adapters.TweetAdapter;
 import com.codepath.apps.twitter.databinding.ActivityTimelineBinding;
 import com.codepath.apps.twitter.fragments.CreateDialogFragment;
 import com.codepath.apps.twitter.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.twitter.models.Tweet;
-import com.codepath.apps.twitter.models.TweetModel;
 import com.codepath.apps.twitter.models.TweetRequest;
 import com.codepath.apps.twitter.providers.DataProvider;
 import com.codepath.apps.twitter.utils.CommonUtils;
@@ -122,10 +117,11 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
                 .build()
         );
 
+        client = TwitterApp.getRestClient();
         rvTweets = mBinding.rvTweet;
         mTweets = new ArrayList<>();
 
-        mAdapter = new TweetAdapter(this, mTweets);
+        mAdapter = new TweetAdapter(this, client, mTweets);
         mLayoutManager = new LinearLayoutManager(this);
         rvTweets.setAdapter(mAdapter);
         rvTweets.setLayoutManager(mLayoutManager);
@@ -140,7 +136,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         };
         rvTweets.addOnScrollListener(scrollListener);
 
-        client = TwitterApp.getRestClient();
+
         btnCreatePost = mBinding.btnCreatePost;
 
         btnCreatePost.setOnClickListener(v -> {
@@ -290,6 +286,8 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         });
     }
 
+
+
     @Override
     public void onFragmentInteraction(TweetRequest tweetRequest) {
         postTweet(tweetRequest);
@@ -307,15 +305,6 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
     private void populateDataFromDb() {
         DataProvider provider = new DataProvider();
         ArrayList<Tweet> tweets = provider.readTweets();
-
-        for (Tweet tweet : tweets) {
-            refreshDataAndUI(tweet);
-        }
-    }
-
-    // TODO: remove the test data functions
-    private void populateTestData() {
-        ArrayList<Tweet> tweets = TestDataHelper.getTweets();
 
         for (Tweet tweet : tweets) {
             refreshDataAndUI(tweet);

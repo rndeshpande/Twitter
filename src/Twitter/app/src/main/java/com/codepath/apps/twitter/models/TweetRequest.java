@@ -11,6 +11,16 @@ public class TweetRequest {
     public long inReplyToStatusId;
     public String InReplyToScreenName;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long id;
+
     public TweetRequest() {
     }
 
@@ -19,6 +29,13 @@ public class TweetRequest {
     }
 
     public TweetRequest(String status, long inReplyToStatusId, String InReplyToScreenName) {
+        this.status = status;
+        this.inReplyToStatusId = inReplyToStatusId;
+        this.InReplyToScreenName = InReplyToScreenName;
+    }
+
+    public TweetRequest(long id, String status, long inReplyToStatusId, String InReplyToScreenName) {
+        this.id = id;
         this.status = status;
         this.inReplyToStatusId = inReplyToStatusId;
         this.InReplyToScreenName = InReplyToScreenName;

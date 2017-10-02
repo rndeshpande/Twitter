@@ -1,31 +1,25 @@
 package com.codepath.apps.twitter.activities;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 
 
-import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.codepath.apps.twitter.R;
-import com.codepath.apps.twitter.TwitterApp;
-import com.codepath.apps.twitter.TwitterClient;
+import com.codepath.apps.twitter.utils.TwitterApp;
+import com.codepath.apps.twitter.utils.TwitterClient;
 import com.codepath.apps.twitter.adapters.CustomBindingAdapter;
 import com.codepath.apps.twitter.databinding.ActivityDetailsBinding;
 import com.codepath.apps.twitter.fragments.CreateDialogFragment;
 import com.codepath.apps.twitter.models.Tweet;
 import com.codepath.apps.twitter.models.TweetExtended;
 import com.codepath.apps.twitter.models.TweetRequest;
-import com.codepath.apps.twitter.models.VideoVariant;
 import com.codepath.apps.twitter.utils.CommonUtils;
 import com.codepath.apps.twitter.utils.TestDataHelper;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -185,11 +179,5 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
             vvMediaVideo.setVisibility(View.GONE);
             CustomBindingAdapter.loadImageFull(mBinding.ivMediaImage, tweetExtended.entitiesExtended.media.get(0).getMediaUrl());
         }
-    }
-
-    // TODO: remove below test data helper
-    private void populateTestData() {
-        TweetExtended tweetExtended = TestDataHelper.getTweetExtended();
-        mBinding.setTweet(tweetExtended);
     }
 }

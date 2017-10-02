@@ -82,7 +82,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="5dp"
-                android:drawableStart="@drawable/ic_comment" />
+                android:drawableStart="@drawable/ic_comment"
+                />
 
             <TextView
                 android:id="@+id/tvRetweet"
@@ -92,9 +93,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:drawablePadding="5dp"
-                android:drawableStart="@drawable/ic_retweet"
+                android:drawableStart="@{tweet.retweeted? @drawable/ic_retweet_clicked : @drawable/ic_retweet}"
                 android:gravity="center"
-                android:text="@{String.valueOf(tweet.retweetCount)}" />
+                android:text="@{String.valueOf(tweet.retweetCount)}"
+                />
 
             <TextView
                 android:id="@+id/tvFavorite"
@@ -104,9 +106,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:drawablePadding="5dp"
-                android:drawableStart="@drawable/ic_favorite"
+                android:drawableStart="@{tweet.retweeted? @drawable/ic_favorite_clicked : @drawable/ic_favorite}"
                 android:gravity="center"
-                android:text="@{String.valueOf(tweet.favoriteCount)}" />
+                android:text="@{String.valueOf(tweet.favoriteCount)}"
+                />
         </RelativeLayout>
     </RelativeLayout>
 </layout>
