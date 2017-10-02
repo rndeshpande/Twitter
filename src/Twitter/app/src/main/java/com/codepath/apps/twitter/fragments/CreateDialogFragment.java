@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.twitter.R;
@@ -28,6 +29,7 @@ public class CreateDialogFragment extends DialogFragment {
     EditText etStatus;
     TextView tvCharCount;
     Button btnSubmit;
+    ImageView ivCancel;
 
     long inReplyToStatusId;
     String inReplyToScreenName;
@@ -75,6 +77,7 @@ public class CreateDialogFragment extends DialogFragment {
         }
 
         setSubmitBehavior();
+        setCancelBehavior();
         setCharacterLimit();
 
         return view;
@@ -112,6 +115,13 @@ public class CreateDialogFragment extends DialogFragment {
                 String remainingChars = Integer.toString(CHARACTER_LIMIT - length);
                 tvCharCount.setText(remainingChars);
             }
+        });
+    }
+
+    private void setCancelBehavior() {
+        ivCancel = binding.ivCancel;
+        ivCancel.setOnClickListener(v-> {
+            dismiss();
         });
     }
 
@@ -162,4 +172,5 @@ public class CreateDialogFragment extends DialogFragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(TweetRequest tweetRequest);
     }
+
 }

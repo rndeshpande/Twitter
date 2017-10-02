@@ -15,19 +15,32 @@
         android:windowMinWidthMajor="0dp"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/ivCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_cross_out"
+            android:layout_alignParentTop="true"
+            android:layout_margin="20dp"
+            />
         <EditText
             android:id="@+id/etStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/tweet_new_placeholder"
+            android:layout_below="@+id/ivCancel"
             android:maxLength="140"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_above="@+id/rlBar"
             style="@style/TweetNewText"
             android:text='@{(tweet.inReplyToScreenName != null ? "@" + tweet.inReplyToScreenName : "")  +  (tweet.status != null ? " " + tweet.status : "")}'/>
 
         <RelativeLayout
+            android:id="@+id/rlBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etStatus"
+            android:gravity="bottom"
             android:layout_alignParentBottom="true">
 
             <TextView
@@ -36,14 +49,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/btnSubmit"
-                android:layout_alignParentBottom="true"
-                android:paddingBottom="10dp"/>
+                android:layout_centerVertical="true"
+                android:text="test"
+                android:paddingBottom="0dp"/>
 
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:text="@string/tweet_button"
                 style="@style/TweetCreate"
