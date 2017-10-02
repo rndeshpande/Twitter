@@ -53,11 +53,15 @@ public class CommonUtils {
         long diff = nowMs - thenMs;
 
         // Calculate difference in seconds
+        long diffSeconds = diff / 1000;
         long diffMinutes = diff / (60 * 1000);
         long diffHours = diff / (60 * 60 * 1000);
         long diffDays = diff / (24 * 60 * 60 * 1000);
 
-        if (diffMinutes < 60) {
+        if (diffSeconds < 60) {
+            return diffSeconds + "s";
+
+        } else if (diffMinutes < 60) {
             return diffMinutes + "m";
 
         } else if (diffHours < 24) {
@@ -67,7 +71,6 @@ public class CommonUtils {
             return diffDays + "d";
 
         } else {
-
             SimpleDateFormat todate = new SimpleDateFormat("MMM dd",
                     Locale.ENGLISH);
 

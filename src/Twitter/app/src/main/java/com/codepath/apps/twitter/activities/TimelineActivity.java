@@ -121,7 +121,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         rvTweets = mBinding.rvTweet;
         mTweets = new ArrayList<>();
 
-        mAdapter = new TweetAdapter(this, client, mTweets);
+        mAdapter = new TweetAdapter(this, client, mTweets, getSupportFragmentManager());
         mLayoutManager = new LinearLayoutManager(this);
         rvTweets.setAdapter(mAdapter);
         rvTweets.setLayoutManager(mLayoutManager);

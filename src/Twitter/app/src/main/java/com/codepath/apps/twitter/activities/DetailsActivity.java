@@ -180,4 +180,85 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
             CustomBindingAdapter.loadImageFull(mBinding.ivMediaImage, tweetExtended.entitiesExtended.media.get(0).getMediaUrl());
         }
     }
+
+    public void retweet(View view) {
+        TweetExtended tweetExtended = mBinding.getTweet();
+        postRetweet(tweetExtended.getUuid(), tweetExtended.retweeted);
+    }
+
+    public void favorite(View view) {
+        TweetExtended tweetExtended = mBinding.getTweet();
+        postFavorite(tweetExtended.getUuid(), tweetExtended.favorited);
+    }
+
+    private void postRetweet(long tweetId, Boolean retweeted) {
+        client.postReTweet(tweetId, !retweeted, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                TweetExtended tweetExtended = new TweetExtended();
+                try {
+                    tweetExtended = TweetExtended.fromJSON(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                mBinding.setTweet(tweetExtended);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                throwable.printStackTrace();
+            }
+        });
+    }
+
+    private void postFavorite(long tweetId, Boolean favorited) {
+        client.postFavorite(tweetId, !favorited, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                TweetExtended tweetExtended = new TweetExtended();
+                try {
+                    tweetExtended = TweetExtended.fromJSON(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mBinding.setTweet(tweetExtended);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                throwable.printStackTrace();
+            }
+        });
+    }
 }

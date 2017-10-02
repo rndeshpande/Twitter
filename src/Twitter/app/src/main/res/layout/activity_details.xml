@@ -151,7 +151,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:src="@drawable/ic_retweet" />
+                    android:src="@{tweet.retweeted? @drawable/ic_retweet_clicked : @drawable/ic_retweet}"
+                    android:onClick="retweet" />
 
                 <ImageView
                     android:id="@+id/ivFavorite"
@@ -159,7 +160,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:gravity="center"
-                    android:src="@drawable/ic_favorite" />
+                    android:src="@{tweet.retweeted? @drawable/ic_favorite_clicked : @drawable/ic_favorite}"
+                    android:onClick="retweet"/>
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
