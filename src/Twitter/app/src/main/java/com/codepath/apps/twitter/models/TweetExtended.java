@@ -107,9 +107,18 @@ public class TweetExtended {
         tweetExtended.retweetCount = jsonObject.getInt("retweet_count");
         tweetExtended.favoriteCount = jsonObject.getInt("favorite_count");
         tweetExtended.user = User.fromJSON(jsonObject.getJSONObject("user"));
-        tweetExtended.entities = Entities.fromJSON(jsonObject.getJSONObject("entities"));
-        tweetExtended.entitiesExtended = EntitiesExtended.fromJSON(jsonObject.getJSONObject("extended_entities"));
-
+        try{
+            tweetExtended.entities = Entities.fromJSON(jsonObject.getJSONObject("entities"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try{
+            tweetExtended.entitiesExtended = EntitiesExtended.fromJSON(jsonObject.getJSONObject("extended_entities"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
         return tweetExtended;
     }
 }

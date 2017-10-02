@@ -117,7 +117,7 @@ public class TimelineActivity extends AppCompatActivity implements CreateDialogF
         setToolbar();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Helvetica Neue Bold.ttf")
+                .setDefaultFontPath("fonts/Helvetica Neu Bold.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

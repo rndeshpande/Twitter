@@ -83,7 +83,8 @@
                 android:layout_height="50dp"
                 android:layout_below="@+id/tvBody"
                 android:layout_marginTop="10dp"
-                app:imageUrlFull='@{tweet.entities.media.size() > 0 ? tweet.entities.media.get(0).mediaUrl : ""}' />
+                android:visibility="gone"
+                />
 
             <VideoView
                 android:id="@+id/vvMediaVideo"
@@ -91,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ivMediaImage"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 />
 
             <TextView

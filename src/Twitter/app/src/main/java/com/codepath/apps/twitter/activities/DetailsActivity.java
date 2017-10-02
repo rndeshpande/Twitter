@@ -19,6 +19,7 @@ import android.widget.VideoView;
 import com.codepath.apps.twitter.R;
 import com.codepath.apps.twitter.TwitterApp;
 import com.codepath.apps.twitter.TwitterClient;
+import com.codepath.apps.twitter.adapters.CustomBindingAdapter;
 import com.codepath.apps.twitter.databinding.ActivityDetailsBinding;
 import com.codepath.apps.twitter.fragments.CreateDialogFragment;
 import com.codepath.apps.twitter.models.Tweet;
@@ -56,7 +57,7 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     private void initialize() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Helvetica Neue Bold.ttf")
+                .setDefaultFontPath("fonts/Helvetica Neu Bold.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
@@ -76,10 +77,12 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 TweetExtended tweetExtended = new TweetExtended();
                 try {
+                    Log.d(TAG, response.toString());
                     tweetExtended = TweetExtended.fromJSON(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.d(TAG, tweetExtended.body);
                 mBinding.setTweet(tweetExtended);
                 setupMediaDisplay(tweetExtended);
             }
@@ -141,14 +144,18 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
     private void setupMediaDisplay(TweetExtended tweetExtended) {
 
         // Play video if available
-        if(tweetExtended.entitiesExtended.media != null
+        if(tweetExtended != null
+                && tweetExtended.entitiesExtended != null
+                && tweetExtended.entitiesExtended.media != null
                 && tweetExtended.entitiesExtended.media.size() > 0
                 && tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().size() > 0
                 && tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl() != "") {
 
             ivMediaImage = mBinding.ivMediaImage;
             ivMediaImage.setVisibility(View.GONE);
+
             vvMediaVideo = mBinding.vvMediaVideo;
+            vvMediaVideo.setVisibility(View.VISIBLE);
             vvMediaVideo.setVideoPath(tweetExtended.entitiesExtended.media.get(0).videoInfo.getVariants().get(0).getUrl());
             MediaController mediaController = new MediaController(this);
             mediaController.setAnchorView(vvMediaVideo);
@@ -159,7 +166,19 @@ public class DetailsActivity extends AppCompatActivity implements CreateDialogFr
                 mp.setLooping(true);
                 mp.start();
             });
+        }
+        else if(tweetExtended != null
+                && tweetExtended.entitiesExtended != null
+                && tweetExtended.entitiesExtended.media != null
+                && tweetExtended.entitiesExtended.media.size() > 0
+                && tweetExtended.entitiesExtended.media.get(0).getMediaUrl() != "") {
 
+            ivMediaImage = mBinding.ivMediaImage;
+            ivMediaImage.setVisibility(View.VISIBLE);
+
+            vvMediaVideo = mBinding.vvMediaVideo;
+            vvMediaVideo.setVisibility(View.GONE);
+            CustomBindingAdapter.loadImageFull(mBinding.ivMediaImage, tweetExtended.entitiesExtended.media.get(0).getMediaUrl());
         }
     }
 
